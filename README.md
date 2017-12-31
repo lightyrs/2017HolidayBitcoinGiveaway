@@ -7,8 +7,5 @@
 ## Notes
 
 1. Add the list of tweets you want to embed, line by line, in **tweets.txt**.
-2. The script will generate **tweets.html** with the oembed twitter embed markup for every tweet in **tweets.txt**. The script will add the twitter widgets js in order to render the tweets in full. If you would like a simpler, faster version, simply remove the call to:
-
-```js
-logger.write(twitterJs);
-```
+2. The script will generate **tweets.html** with the oembed twitter embed markup for every tweet in **tweets.txt**.
+3. If you would like the script to add the twitter widgets js in order to render the tweets in full, follow the comments in **index.js** for instructions.
