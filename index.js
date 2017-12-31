@@ -25,6 +25,8 @@ const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>Tw
 
 const closingTags = '</body></html>';
 
+// Performs the http request for the oembed tweet
+// Parses the oembed tweet and returns the html markup
 function fetchEmbedMarkup(url) {
   console.log('Fetching markup for ' + url);
 
@@ -59,6 +61,8 @@ function transformUrls() {
   });
 }
 
+// Loops through array of oembed urls
+// Returns array of markup for all urls
 async function fetchEmbedsMarkup(urls) {
   let embedsMarkup = [];
   for (let url of urls) {
