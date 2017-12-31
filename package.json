@@ -1,0 +1,17 @@
+{
+  "name": "lombrozo_bitcoin_giveaway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "async": "~2.6.0",
+    "lodash": "~4.17.4",
+    "request": "^2.79.0"
+  },
+  "author": "harris novick",
+  "private": true,
+  "license": "UNLICENSED"
+}
