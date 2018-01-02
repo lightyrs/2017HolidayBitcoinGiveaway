@@ -19,10 +19,10 @@ const lazySizesJs = '<script src="lazysizes.min.js" async=""></script>';
 const twitterJs = '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" id="twitter-wjs"></script>';
 
 // Use this for the fully static version
-// const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + '</head><body>';
+// const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">' + styleMarkup + '</head><body><div class="wrapper">';
 
 // Use this for the twitter js version
-const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + lazySizesJs + twitterJs + '</head><body><div class="wrapper">';
+const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title><meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">' + styleMarkup + lazySizesJs + twitterJs + '</head><body><div class="wrapper">';
 
 const closingTags = '</div></body></html>';
 
