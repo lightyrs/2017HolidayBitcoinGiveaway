@@ -7,7 +7,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "async": "~2.6.0",
     "request": "^2.79.0"
   },
   "author": "harris novick",

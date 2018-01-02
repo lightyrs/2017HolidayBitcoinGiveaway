@@ -1,27 +1,28 @@
-const async = require('async');
 const request = require('request');
 
 const fs = require('fs');
 
 // Use this for the fully static version
-const writer = fs.createWriteStream('tweets.html', {
-  flags: 'w'
-});
-
-// Use this for the twitter js version
-// const writer = fs.createWriteStream('tweets_js.html', {
+// const writer = fs.createWriteStream('tweets.html', {
 //   flags: 'w'
 // });
 
-const styleMarkup = '<style>.tweet-container { display: inline-block; font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif; font-size: 12px; font-weight: bold; line-height: 16px; border-color: #eee #ddd #bbb; border-radius: 5px; border-style: solid; border-width: 1px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); margin: 10px 5px; padding: 0 16px 16px 16px; overflow-wrap: break-word; word-wrap: break-word; } blockquote.twitter-tweet p { font-size: 16px; font-weight: normal; line-height: 20px; } blockquote.twitter-tweet a { color: inherit; font-weight: normal; text-decoration: none; outline: 0 none; } blockquote.twitter-tweet a:hover, blockquote.twitter-tweet a:focus { text-decoration: underline; } body { counter-reset: tweet; } .tweet-container::before { counter-increment: tweet; content: counter(tweet); } .tweet-container img { display: inline-block; width: 64px; height: 64px; border-radius: 50%; margin-right: 20px; -webkit-margin-before: 1em; -webkit-margin-after: 1em; } blockquote { margin: 0; padding: 0; display: inline-block; max-width: 468px; }</style>';
+// Use this for the twitter js version
+const writer = fs.createWriteStream('tweets_js.html', {
+  flags: 'w'
+});
 
-const twitterJs = '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>';
+const styleMarkup = '<style>blockquote.twitter-tweet { display: inline-block; font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif; font-size: 12px; font-weight: bold; line-height: 16px; border-color: #eee #ddd #bbb; border-radius: 5px; border-style: solid; border-width: 1px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); margin: 10px 5px; padding: 0 16px 16px 16px; max-width: 468px; } blockquote.twitter-tweet p { font-size: 16px; font-weight: normal; line-height: 20px; } blockquote.twitter-tweet a { color: inherit; font-weight: normal; text-decoration: none; outline: 0 none; } blockquote.twitter-tweet a:hover, blockquote.twitter-tweet a:focus { text-decoration: underline; }</style>';
+
+const lazySizesJs = '<script src="lazysizes.min.js" async=""></script>';
+
+const twitterJs = '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" id="twitter-wjs"></script>';
 
 // Use this for the fully static version
-const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + '</head><body>';
+// const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + '</head><body>';
 
 // Use this for the twitter js version
-// const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + twitterJs + '</head><body>';
+const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + lazySizesJs + twitterJs + '</head><body>';
 
 const closingTags = '</body></html>';
 
@@ -30,16 +31,21 @@ const closingTags = '</body></html>';
 function fetchEmbedMarkup(url) {
   console.log('Fetching markup for ' + url);
 
-  let wrapper = '<div class="tweet-container">';
-  let wrapperClose = '</div>';
-
-  let username = url.match(/https:\/\/publish\.twitter.com\/oembed\?url\=https:\/\/twitter.com\/(.*)\/status\/.*/)[1];
-
-  let avatar = `<img src="https://avatars.io/twitter/${username}/medium" />`;
+  // let wrapper = '<div class="tweet-container">';
+  // let wrapperClose = '</div>';
+  //
+  // let username = url.match(/https:\/\/publish\.twitter.com\/oembed\?url\=https:\/\/twitter.com\/(.*)\/status\/.*/)[1];
+  //
+  // let avatar = `<img src="https://avatars.io/twitter/${username}/medium" />`;
 
   return new Promise(function(resolve, reject) {
     request(url, function (error, response, body) {
-      resolve(wrapper + avatar + JSON.parse(body).html + wrapperClose + '<br>');
+      if (body.match('{"url"')) {
+        let markup = JSON.parse(body).html.replace('blockquote class="twitter-tweet"', 'blockquote class="lazyload" data-twitter="twitter-tweet"');
+        resolve(markup + '<br>');
+      } else {
+        resolve('');
+      }
     });
   });
 }
