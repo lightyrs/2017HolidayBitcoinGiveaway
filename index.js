@@ -22,9 +22,9 @@ const twitterJs = '<script async src="https://platform.twitter.com/widgets.js" c
 // const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + '</head><body>';
 
 // Use this for the twitter js version
-const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + lazySizesJs + twitterJs + '</head><body>';
+const openingTags = '<!DOCTYPE html><html><head><meta charset="UTF-8"> <title>TweetEmbedder</title>' + styleMarkup + lazySizesJs + twitterJs + '</head><body><div class="wrapper">';
 
-const closingTags = '</body></html>';
+const closingTags = '</div></body></html>';
 
 // Performs the http request for the oembed tweet
 // Parses the oembed tweet and returns the html markup
